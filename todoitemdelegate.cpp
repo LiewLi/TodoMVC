@@ -17,7 +17,6 @@ TodoItemDelegate::TodoItemDelegate(QObject *parent): QStyledItemDelegate(parent)
 QWidget* TodoItemDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QTextEdit *edit = new QTextEdit(parent);
-    edit->setAlignment(Qt::AlignCenter);
     return edit;
 }
 
@@ -34,8 +33,11 @@ void TodoItemDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, 
     QTextEdit *edit = static_cast<QTextEdit *>(editor);
     const TodoModel *todoModel = static_cast<const TodoModel *>(index.model());
     QVariant var =  todoModel->data(index, Qt::EditRole);
-    var.value<TodoItem>().title = edit->toPlainText();
-    model->setData(index, var);
+    TodoItem item = var.value<TodoItem>();
+    item.title = edit->toPlainText();
+    QVariant newVar;
+    newVar.setValue(item);
+    model->setData(index, newVar);
 }
 
 QSize TodoItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const

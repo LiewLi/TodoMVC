@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_model = new TodoModel();
     m_delegate = new TodoItemDelegate(this);
+    m_view->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::SelectedClicked);
     m_view->setModel(m_model);
     m_view->setItemDelegate(m_delegate);
 }
