@@ -1,2 +1,2 @@
 # TodoMVC With Qt
-![TodoX](./todox.png)
+<img src="./todox.png" width="375" />
