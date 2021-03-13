@@ -1,5 +1,5 @@
-#ifndef TODOMODEL_H
-#define TODOMODEL_H
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <QObject>
 #include <QList>
@@ -8,6 +8,7 @@
 
 struct TodoItem
 {
+    Q_GADGET
  public:
     QString title;
     enum Status {
@@ -17,6 +18,9 @@ struct TodoItem
     } ;
 
     Status status;
+    Q_ENUM(Status)
+    Q_PROPERTY(QString title MEMBER title)
+    Q_PROPERTY(Status status MEMBER status)
 };
 Q_DECLARE_METATYPE(TodoItem);
 
@@ -33,14 +37,17 @@ public:
 
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
 
+
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+ public slots:
+
     void appendTodo(const TodoItem &obj);
     void deleteTodo(const QModelIndex &index);
     void toggleTodo(const QModelIndex &index);
-
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    void updateTodoTitle(const QModelIndex &index, const QString &);
 
 signals:
 
 };
 
-#endif // TODOMODEL_H
+#endif // MODEL_H

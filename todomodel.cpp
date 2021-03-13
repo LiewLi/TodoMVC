@@ -33,14 +33,14 @@ bool TodoModel::setData(const QModelIndex &index, const QVariant &value, int rol
 
 void TodoModel::appendTodo(const TodoItem &obj)
 {
-    beginInsertRows(QModelIndex(), todos->count(), 1);
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
     todos->append(obj);
     endInsertRows();
 }
 
 void TodoModel::deleteTodo(const QModelIndex &index)
 {
-    beginRemoveRows(QModelIndex(), index.row(), index.row() + 1);
+    beginRemoveRows(QModelIndex(), index.row(), index.row());
     todos->remove(index.row(), 1);
     endRemoveRows();
 }
@@ -53,6 +53,16 @@ void TodoModel::toggleTodo(const QModelIndex &index)
     QVariant var;
     var.setValue(obj);
     setData(index, var);
+}
+
+void TodoModel::updateTodoTitle(const QModelIndex &index, const QString & str)
+{
+    TodoItem &obj =  (*todos)[index.row()];
+    obj.title = str;
+    QVariant var;
+    var.setValue(obj);
+    setData(index, var);
+
 }
 
 Qt::ItemFlags TodoModel::flags(const QModelIndex &index) const

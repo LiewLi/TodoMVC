@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
     setMinimumWidth(400);
 
     m_view = new QListView(this);
-
     QFrame *frame = new QFrame(this);
     QVBoxLayout *layout = new QVBoxLayout(frame);
     layout->addWidget(m_view);
